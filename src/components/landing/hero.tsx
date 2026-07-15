@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Github, Shield, Zap, Database } from "lucide-react";
+import { ArrowRight, Shield, Zap, Database } from "lucide-react";
+import { Github } from "@/components/icons/brand-icons";
 
 export function Hero() {
   return (

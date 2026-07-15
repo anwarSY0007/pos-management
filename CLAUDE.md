@@ -16,6 +16,17 @@ npx prisma migrate dev --name <name>   # Create and apply migration
 npx prisma db push    # Push schema changes without migration
 ```
 
+## Pinned Dependencies
+
+Two dev dependencies are intentionally held below their latest major because the newest majors are incompatible with the Next.js 16 toolchain. Do **not** naively bump these — verify `pnpm build` and `pnpm lint` both pass first.
+
+- **typescript** → pinned to `^5.9.3` (latest 5.x). TypeScript 7 (the native compiler) crashes both `next build`'s type checker and `@typescript-eslint`, which read compiler-internal APIs that no longer exist in v7.
+- **eslint** → pinned to `^9.39.5` (latest 9.x). ESLint 10 removed deprecated APIs (e.g. `context.getFilename()`) still used by `eslint-plugin-react`, which is bundled via `eslint-config-next`.
+
+Revisit once `eslint-config-next` ships support for TypeScript 7 and ESLint 10 (i.e. a TS7-aware `@typescript-eslint` and an ESLint-10-compatible `eslint-plugin-react`). All other dependencies track their latest versions.
+
+Note: `dotenv` is a required devDependency — `prisma.config.ts` imports `dotenv/config`.
+
 ## Architecture
 
 ### Tech Stack

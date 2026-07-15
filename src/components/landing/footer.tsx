@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, Github, Twitter } from "lucide-react";
+import { Sparkles } from "lucide-react";
+import { Github, Twitter } from "@/components/icons/brand-icons";
 
 const footerLinks = {
   product: {
