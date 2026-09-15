@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { signUpUser } from "@/actions/auth/auth-actions"
 import { Loader2, User, Mail, Lock } from "lucide-react"
-import { ROLE_REDIRECTS } from "@/config/auth"
+import { DEFAULT_REDIRECT } from "@/config/auth"
 
 export function RegisterUserForm() {
     const [isLoading, setIsLoading] = useState(false)
@@ -41,7 +41,7 @@ export function RegisterUserForm() {
                 toast.success("Account created successfully!", { id: toastId })
                 // Better Auth auto-logs in on signup, refresh and redirect to user dashboard
                 router.refresh()
-                router.push(ROLE_REDIRECTS.USER)
+                router.push(DEFAULT_REDIRECT)
             } else {
                 toast.error(result.error, { id: toastId })
             }
@@ -54,7 +54,7 @@ export function RegisterUserForm() {
     }
 
     return (
-        <div className="w-full max-w-[400px] mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="w-full max-w-100 mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Header Section */}
             <div className="flex flex-col space-y-2 text-center md:text-left">
                 <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">

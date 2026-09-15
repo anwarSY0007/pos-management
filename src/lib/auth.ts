@@ -15,7 +15,7 @@ export const auth = betterAuth({
             role: {
                 type: "string",
                 required: false,
-                defaultValue: "USER",
+                defaultValue: "CASHIER",
                 input: false, // Don't allow setting via signup
             },
         },

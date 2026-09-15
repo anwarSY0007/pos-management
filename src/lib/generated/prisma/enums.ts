@@ -10,9 +10,78 @@
 */
 
 export const UserRole = {
-  USER: 'USER',
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  OWNER: 'OWNER',
   ADMIN: 'ADMIN',
-  PROVIDER: 'PROVIDER'
+  CASHIER: 'CASHIER',
+  WAREHOUSE: 'WAREHOUSE'
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const AccountType = {
+  ASSET: 'ASSET',
+  LIABILITY: 'LIABILITY',
+  EQUITY: 'EQUITY',
+  REVENUE: 'REVENUE',
+  EXPENSE: 'EXPENSE'
+} as const
+
+export type AccountType = (typeof AccountType)[keyof typeof AccountType]
+
+
+export const JournalStatus = {
+  DRAFT: 'DRAFT',
+  POSTED: 'POSTED'
+} as const
+
+export type JournalStatus = (typeof JournalStatus)[keyof typeof JournalStatus]
+
+
+export const ProductStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type ProductStatus = (typeof ProductStatus)[keyof typeof ProductStatus]
+
+
+export const PartyStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type PartyStatus = (typeof PartyStatus)[keyof typeof PartyStatus]
+
+
+export const MovementType = {
+  PURCHASE: 'PURCHASE',
+  SALE: 'SALE',
+  SALE_RETURN: 'SALE_RETURN',
+  PURCHASE_RETURN: 'PURCHASE_RETURN',
+  ADJUSTMENT_IN: 'ADJUSTMENT_IN',
+  ADJUSTMENT_OUT: 'ADJUSTMENT_OUT',
+  TRANSFER_IN: 'TRANSFER_IN',
+  TRANSFER_OUT: 'TRANSFER_OUT',
+  INITIAL_STOCK: 'INITIAL_STOCK'
+} as const
+
+export type MovementType = (typeof MovementType)[keyof typeof MovementType]
+
+
+export const StockTransferStatus = {
+  IN_TRANSIT: 'IN_TRANSIT',
+  RECEIVED: 'RECEIVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type StockTransferStatus = (typeof StockTransferStatus)[keyof typeof StockTransferStatus]
+
+
+export const StockOpnameStatus = {
+  DRAFT: 'DRAFT',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type StockOpnameStatus = (typeof StockOpnameStatus)[keyof typeof StockOpnameStatus]

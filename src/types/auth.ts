@@ -6,4 +6,4 @@ export type Session = typeof auth.$Infer.Session
 export type User = typeof auth.$Infer.Session.user & { role: UserRole }
 
 // Role type for guards
-export type Role = UserRole
+export type Role = "SUPER_ADMIN" | "OWNER" | "ADMIN" | "CASHIER" | "WAREHOUSE";

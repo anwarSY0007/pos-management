@@ -30,8 +30,10 @@ export function useAuth() {
         // Role checks
         role: session.role,
         isAdmin: session.isAdmin,
-        isProvider: session.isProvider,
-        isUser: session.isUser,
+        isProvider: session.isSuperAdmin,
+        isOwner: session.isOwner,
+        isCashier: session.isCashier,
+        isWarehouse: session.isWarehouse,
 
         // Methods
         signOut: session.signOut,

@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { authClient } from "@/lib/auth-client"
 import type { Role } from "@/types/auth"
+import { Permission, hasPermission } from "@/config/permissions"
 
 const AUTH_CHANNEL = "auth-sync"
 
@@ -52,9 +53,12 @@ type SessionContextType = {
 
     // Role checks
     role: Role | undefined
+    isSuperAdmin: boolean
+    isOwner: boolean
     isAdmin: boolean
-    isProvider: boolean
-    isUser: boolean
+    isCashier: boolean
+    isWarehouse: boolean
+    can: (permission: Permission) => boolean
 
     // Methods
     signOut: () => Promise<void>
@@ -157,6 +161,15 @@ export function SessionProvider({
         }
     }, [router])
 
+    // Permission check - memoized per-role so `can()` stays stable across renders
+    const can = useCallback(
+        (permission: Permission) => {
+            if (!role) return false
+            return hasPermission(role, permission)
+        },
+        [role]
+    )
+
     const value = useMemo<SessionContextType>(
         () => ({
             // Session state
@@ -171,15 +184,18 @@ export function SessionProvider({
 
             // Role checks
             role,
+            isSuperAdmin: role === "SUPER_ADMIN",
+            isOwner: role === "OWNER",
             isAdmin: role === "ADMIN",
-            isProvider: role === "PROVIDER",
-            isUser: role === "USER",
+            isCashier: role === "CASHIER",
+            isWarehouse: role === "WAREHOUSE",
+            can,
 
             // Methods
             signOut,
             refetch,
         }),
-        [session, user, isPending, role, signOut, refetch]
+        [session, user, isPending, role, can, signOut, refetch]
     )
 
     return (
@@ -194,7 +210,7 @@ export function SessionProvider({
  * Must be used within a SessionProvider.
  *
  * @example
- * const { user, isAuthenticated, signOut } = useSession()
+ * const { user, isAuthenticated, signOut, can } = useSession()
  */
 export function useSession() {
     const context = useContext(SessionContext)

@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import QueryProvider from "@/context/QueryProvider";
 import { SessionProvider } from "@/components/providers";
 import { getServerSession } from "@/lib/auth-server";
 import { Toaster } from "sonner";
+import { cn } from "@/lib/utils";
+
+const robotoSlabHeading = Roboto_Slab({subsets:['latin'],variable:'--font-heading'});
+
+const notoSans = Noto_Sans({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +36,7 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", notoSans.variable, robotoSlabHeading.variable)}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

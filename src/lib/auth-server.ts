@@ -102,3 +102,28 @@ export async function isAuthenticated(): Promise<boolean> {
     const session = await getServerSession()
     return !!session
 }
+
+/**
+ * Require one of several roles on a server page/action.
+ * Redirects if not authenticated or role not in the list.
+ * (Needed for multi-role pages, e.g. /users = SUPER_ADMIN + OWNER.)
+ */
+export async function requireAnyRole(roles: Role[], options?: {
+    redirectTo?: string
+    roleRedirectTo?: string
+}) {
+    const session = await getServerSession()
+
+    if (!session) {
+        redirect(options?.redirectTo ?? "/login")
+    }
+
+    const userRole = (session.user as { role?: Role }).role
+
+    if (!userRole || !roles.includes(userRole)) {
+        const defaultRedirect = getRoleRedirect(userRole)
+        redirect(options?.roleRedirectTo ?? defaultRedirect)
+    }
+
+    return session
+}

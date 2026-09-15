@@ -10,15 +10,15 @@ export default function SignupUserPage() {
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-slate-950" />
                     {/* Glowing Orbs - Emerald/Teal Theme */}
-                    <div className="absolute -top-[20%] -right-[10%] h-[700px] w-[700px] rounded-full bg-emerald-600/20 blur-[100px]" />
-                    <div className="absolute bottom-[20%] -left-[10%] h-[500px] w-[500px] rounded-full bg-teal-600/10 blur-[100px]" />
-                    <div className="absolute -bottom-[10%] right-[10%] h-[400px] w-[400px] rounded-full bg-emerald-900/40 blur-[80px]" />
+                    <div className="absolute top-[-20%] right-[-10%] h-175 w-175 rounded-full bg-emerald-600/20 blur-[100px]" />
+                    <div className="absolute bottom-[20%] left-[-10%] h-125 w-125 rounded-full bg-teal-600/10 blur-[100px]" />
+                    <div className="absolute bottom-[-10%] right-[10%] h-100 w-100 rounded-full bg-emerald-900/40 blur-[80px]" />
 
                     {/* Technical Grid Pattern */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[32px_32px]" />
 
                     {/* Vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/20" />
+                    <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-slate-950/20" />
                 </div>
 
                 {/* Branding */}
@@ -27,7 +27,7 @@ export default function SignupUserPage() {
                 </div>
 
                 {/* Onboarding Steps Showcase */}
-                <div className="relative z-10 my-auto max-w-[500px]">
+                <div className="relative z-10 my-auto max-w-125">
                     <div className="mb-10 space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
                         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                             Start building in minutes.
@@ -37,7 +37,7 @@ export default function SignupUserPage() {
                         </p>
                     </div>
 
-                    <div className="relative space-y-8 before:absolute before:left-[19px] before:top-2 before:h-[calc(100%-20px)] before:w-[2px] before:bg-slate-800">
+                    <div className="relative space-y-8 before:absolute before:left-4.75 before:top-2 before:h-[calc(100%-20px)] before:w-0.5 before:bg-slate-800">
                         {/* Step 1 */}
                         <div className="relative flex items-start gap-4 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
                             <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-900/20 ring-4 ring-slate-950">
@@ -82,7 +82,7 @@ export default function SignupUserPage() {
 
             {/* Right Column: Form */}
             <div className="min-h-screen flex items-center justify-center p-8 lg:p-12 bg-white dark:bg-[#0B0F19]">
-                <div className="w-full max-w-[450px]">
+                <div className="w-full max-w-112.5">
                     <RegisterUserForm />
                 </div>
             </div>

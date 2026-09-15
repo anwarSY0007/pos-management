@@ -37,3 +37,104 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model Branch
+ * 
+ */
+export type Branch = Prisma.BranchModel
+/**
+ * Model UserBranch
+ * 
+ */
+export type UserBranch = Prisma.UserBranchModel
+/**
+ * Model DocumentSequence
+ * 
+ */
+export type DocumentSequence = Prisma.DocumentSequenceModel
+/**
+ * Model SystemSetting
+ * 
+ */
+export type SystemSetting = Prisma.SystemSettingModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model ChartOfAccount
+ * 
+ */
+export type ChartOfAccount = Prisma.ChartOfAccountModel
+/**
+ * Model JournalEntry
+ * 
+ */
+export type JournalEntry = Prisma.JournalEntryModel
+/**
+ * Model JournalEntryLine
+ * 
+ */
+export type JournalEntryLine = Prisma.JournalEntryLineModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model Brand
+ * 
+ */
+export type Brand = Prisma.BrandModel
+/**
+ * Model Unit
+ * 
+ */
+export type Unit = Prisma.UnitModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model Supplier
+ * 
+ */
+export type Supplier = Prisma.SupplierModel
+/**
+ * Model ProductStock
+ * CACHE stok — HANYA diubah via InventoryService dalam transaksi
+ * yang sama dengan StockMovement. DB menolak nilai minus (CHECK).
+ */
+export type ProductStock = Prisma.ProductStockModel
+/**
+ * Model StockMovement
+ * SOURCE OF TRUTH stok. quantity SIGNED: masuk (+), keluar (−).
+ */
+export type StockMovement = Prisma.StockMovementModel
+/**
+ * Model StockTransfer
+ * 
+ */
+export type StockTransfer = Prisma.StockTransferModel
+/**
+ * Model StockTransferItem
+ * 
+ */
+export type StockTransferItem = Prisma.StockTransferItemModel
+/**
+ * Model StockOpname
+ * 
+ */
+export type StockOpname = Prisma.StockOpnameModel
+/**
+ * Model StockOpnameItem
+ * 
+ */
+export type StockOpnameItem = Prisma.StockOpnameItemModel

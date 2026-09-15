@@ -10,15 +10,15 @@ export default function LoginPage() {
                 <div className="absolute inset-0 z-0">
                     <div className="absolute inset-0 bg-slate-950" />
                     {/* Glowing Orbs */}
-                    <div className="absolute -top-[20%] -left-[10%] h-[600px] w-[600px] rounded-full bg-indigo-600/20 blur-[100px]" />
-                    <div className="absolute top-[30%] right-[10%] h-[300px] w-[300px] rounded-full bg-violet-500/10 blur-[80px]" />
-                    <div className="absolute -bottom-[10%] -right-[10%] h-[600px] w-[600px] rounded-full bg-blue-600/20 blur-[100px]" />
+                    <div className="absolute top-[-20%] left-[-10%] h-150 w-150 rounded-full bg-indigo-600/20 blur-[100px]" />
+                    <div className="absolute top-[30%] right-[10%] h-75 w-75 rounded-full bg-violet-500/10 blur-[80px]" />
+                    <div className="absolute bottom-[-10%] right-[-10%] h-150 w-150 rounded-full bg-blue-600/20 blur-[100px]" />
 
                     {/* Technical Grid Pattern */}
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[32px_32px]" />
 
                     {/* Vignette */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/20" />
+                    <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-transparent to-slate-950/20" />
                 </div>
 
                 {/* Branding */}
@@ -27,7 +27,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* Feature Showcase */}
-                <div className="relative z-10 my-auto flex flex-col gap-8 max-w-[500px]">
+                <div className="relative z-10 my-auto flex flex-col gap-8 max-w-125">
                     <div className="space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
                         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                             Build production-ready apps faster.
@@ -99,7 +99,7 @@ export default function LoginPage() {
 
             {/* Right Column: Form*/}
             <div className="min-h-screen flex items-center justify-center p-8 lg:p-12 bg-white dark:bg-[#0B0F19]">
-                <div className="w-full max-w-[450px]">
+                <div className="w-full max-w-112.5">
                     <LoginInForm />
                 </div>
             </div>

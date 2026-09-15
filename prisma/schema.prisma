@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/lib/generated/prisma"
@@ -13,23 +7,37 @@ datasource db {
   provider = "postgresql"
 }
 
+// =============================
+// AUTH (Better Auth) — struktur tidak diubah
+// =============================
+
 enum UserRole {
-  USER
+  SUPER_ADMIN
+  OWNER
   ADMIN
-  PROVIDER
+  CASHIER
+  WAREHOUSE
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String
-  role          UserRole  @default(USER)
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id                String          @id @default(uuid())
+  name              String
+  email             String
+  role              UserRole        @default(CASHIER)
+  emailVerified     Boolean         @default(false)
+  image             String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  sessions          Session[]
+  accounts          Account[]
+  branches          UserBranch[]
+  auditLogs         AuditLog[]
+  stockMovements    StockMovement[]
+  transfersCreated  StockTransfer[] @relation("TransferCreatedBy")
+  transfersReceived StockTransfer[] @relation("TransferReceivedBy")
+  opnamesCreated    StockOpname[]   @relation("OpnameCreatedBy")
+  opnamesCompleted  StockOpname[]   @relation("OpnameCompletedBy")
+  sales             Sale[]          @relation("SaleCashier")
 
   @@unique([email])
   @@map("user")
@@ -48,7 +56,7 @@ model Session {
 
   @@unique([token])
   @@index([userId])
-  @@index([expiresAt]) // For cleanup queries
+  @@index([expiresAt])
   @@map("session")
 }
 
@@ -81,6 +89,539 @@ model Verification {
   updatedAt  DateTime @updatedAt
 
   @@index([identifier])
-  @@index([expiresAt]) // For cleanup queries
+  @@index([expiresAt])
   @@map("verification")
+}
+
+// =============================
+// POS: FOUNDATION (Phase 1)
+// =============================
+
+model Branch {
+  id       String  @id @default(uuid())
+  code     String  @unique
+  name     String
+  address  String?
+  phone    String?
+  isActive Boolean @default(true)
+
+  users          UserBranch[]
+  sales          Sale[]
+  sequences      DocumentSequence[]
+  journalEntries JournalEntry[]
+  auditLogs      AuditLog[]
+
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  productStocks  ProductStock[]
+  stockMovements StockMovement[]
+  transfersOut   StockTransfer[] @relation("TransferFrom")
+  transfersIn    StockTransfer[] @relation("TransferTo")
+  opnames        StockOpname[]
+  receivables    Receivable[]
+
+  @@map("branch")
+}
+
+model UserBranch {
+  userId    String
+  branchId  String
+  isDefault Boolean @default(false)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@id([userId, branchId])
+  @@index([branchId])
+  @@map("user_branch")
+}
+
+// Penomoran dokumen atomik — hanya diubah via nextDocumentNumber() dalam transaksi
+model DocumentSequence {
+  id       String @id @default(uuid())
+  branchId String
+  docType  String
+  period   String
+  current  Int    @default(0)
+
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Restrict)
+
+  @@unique([branchId, docType, period])
+  @@map("document_sequence")
+}
+
+model SystemSetting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+
+  @@map("system_setting")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  branchId  String?
+  action    String
+  entity    String
+  entityId  String?
+  oldValue  Json?
+  newValue  Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  branch Branch? @relation(fields: [branchId], references: [id], onDelete: SetNull)
+
+  @@index([entity, entityId])
+  @@index([branchId, createdAt])
+  @@map("audit_log")
+}
+
+// =============================
+// ACCOUNTING (schema-only di Phase 1; service menyusul Phase 7)
+// =============================
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  REVENUE
+  EXPENSE
+}
+
+enum JournalStatus {
+  DRAFT
+  POSTED
+}
+
+model ChartOfAccount {
+  id       String      @id @default(uuid())
+  code     String      @unique
+  name     String
+  type     AccountType
+  isActive Boolean     @default(true)
+
+  journalLines JournalEntryLine[]
+
+  createdAt DateTime @default(now())
+
+  @@map("chart_of_account")
+}
+
+model JournalEntry {
+  id          String        @id @default(uuid())
+  entryNumber String        @unique
+  branchId    String
+  entryDate   DateTime
+  memo        String
+  sourceType  String
+  sourceId    String?
+  status      JournalStatus @default(DRAFT)
+  postedAt    DateTime?
+
+  branch Branch             @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  lines  JournalEntryLine[]
+
+  createdAt DateTime @default(now())
+
+  @@index([branchId, entryDate])
+  @@map("journal_entry")
+}
+
+model JournalEntryLine {
+  id        String  @id @default(uuid())
+  entryId   String
+  accountId String
+  debit     Decimal @default(0) @db.Decimal(18, 2)
+  credit    Decimal @default(0) @db.Decimal(18, 2)
+
+  entry   JournalEntry   @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  account ChartOfAccount @relation(fields: [accountId], references: [id], onDelete: Restrict)
+
+  @@index([accountId])
+  @@map("journal_entry_line")
+}
+
+// =============================
+// POS: MASTER DATA (Phase 2)
+// =============================
+
+enum ProductStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum PartyStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  description String?
+  isActive    Boolean   @default(true)
+  products    Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("category")
+}
+
+model Brand {
+  id       String    @id @default(uuid())
+  name     String    @unique
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("brand")
+}
+
+model Unit {
+  id       String    @id @default(uuid())
+  name     String    @unique // "Pieces"
+  symbol   String    @unique // "pcs"
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("unit")
+}
+
+model Product {
+  id            String        @id @default(uuid())
+  sku           String        @unique
+  barcode       String?       @unique
+  name          String
+  description   String?
+  categoryId    String?
+  brandId       String?
+  unitId        String?
+  purchasePrice Decimal       @db.Decimal(18, 2)
+  sellingPrice  Decimal       @db.Decimal(18, 2)
+  minimumStock  Decimal       @default(0) @db.Decimal(18, 3)
+  taxRate       Decimal       @default(0) @db.Decimal(5, 2) // persen, exclusive
+  status        ProductStatus @default(ACTIVE)
+  imageUrl      String?
+
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  brand    Brand?    @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  unit     Unit?     @relation(fields: [unitId], references: [id], onDelete: SetNull)
+
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  productStocks  ProductStock[]
+  stockMovements StockMovement[]
+  transferItems  StockTransferItem[]
+  opnameItems    StockOpnameItem[]
+  saleItems      SaleItem[]
+
+  @@index([name])
+  @@index([status])
+  @@index([categoryId])
+  @@map("product")
+}
+
+model Customer {
+  id           String      @id @default(uuid())
+  customerCode String      @unique
+  name         String
+  phone        String?
+  email        String?
+  address      String?
+  creditLimit  Decimal     @default(0) @db.Decimal(18, 2)
+  status       PartyStatus @default(ACTIVE)
+  sales        Sale[]
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  receivables Receivable[]
+
+  @@index([name])
+  @@index([phone])
+  @@map("customer")
+}
+
+model Supplier {
+  id           String      @id @default(uuid())
+  supplierCode String      @unique
+  name         String
+  phone        String?
+  email        String?
+  address      String?
+  status       PartyStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name])
+  @@index([phone])
+  @@map("supplier")
+}
+
+// =============================
+// POS: INVENTORY (Phase 3)
+// =============================
+
+enum MovementType {
+  PURCHASE
+  SALE
+  SALE_RETURN
+  PURCHASE_RETURN
+  ADJUSTMENT_IN
+  ADJUSTMENT_OUT
+  TRANSFER_IN
+  TRANSFER_OUT
+  INITIAL_STOCK
+}
+
+/// CACHE stok — HANYA diubah via InventoryService dalam transaksi
+/// yang sama dengan StockMovement. DB menolak nilai minus (CHECK).
+model ProductStock {
+  id        String  @id @default(uuid())
+  productId String
+  branchId  String
+  quantity  Decimal @default(0) @db.Decimal(18, 3)
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  branch  Branch  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, branchId])
+  @@map("product_stock")
+}
+
+/// SOURCE OF TRUTH stok. quantity SIGNED: masuk (+), keluar (−).
+model StockMovement {
+  id            String       @id @default(uuid())
+  productId     String
+  branchId      String
+  quantity      Decimal      @db.Decimal(18, 3)
+  type          MovementType
+  referenceType String?
+  referenceId   String?
+  unitCost      Decimal?     @db.Decimal(18, 2)
+  note          String?
+  userId        String
+  createdAt     DateTime     @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  branch  Branch  @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([branchId, productId, createdAt])
+  @@index([referenceType, referenceId])
+  @@map("stock_movement")
+}
+
+// =============================
+// POS: INVENTORY (Phase 3b)
+// =============================
+
+enum StockTransferStatus {
+  IN_TRANSIT
+  RECEIVED
+  CANCELLED
+}
+
+enum StockOpnameStatus {
+  DRAFT
+  COMPLETED
+}
+
+model StockTransfer {
+  id             String              @id @default(uuid())
+  transferNumber String              @unique
+  fromBranchId   String
+  toBranchId     String
+  status         StockTransferStatus @default(IN_TRANSIT)
+  note           String?
+  createdById    String
+  receivedById   String?
+  sentAt         DateTime            @default(now())
+  receivedAt     DateTime?
+
+  fromBranch Branch              @relation("TransferFrom", fields: [fromBranchId], references: [id], onDelete: Restrict)
+  toBranch   Branch              @relation("TransferTo", fields: [toBranchId], references: [id], onDelete: Restrict)
+  createdBy  User                @relation("TransferCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  receivedBy User?               @relation("TransferReceivedBy", fields: [receivedById], references: [id], onDelete: SetNull)
+  items      StockTransferItem[]
+
+  @@index([fromBranchId, sentAt])
+  @@index([toBranchId, status])
+  @@map("stock_transfer")
+}
+
+model StockTransferItem {
+  id         String  @id @default(uuid())
+  transferId String
+  productId  String
+  quantity   Decimal @db.Decimal(18, 3)
+
+  transfer StockTransfer @relation(fields: [transferId], references: [id], onDelete: Cascade)
+  product  Product       @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([transferId])
+  @@map("stock_transfer_item")
+}
+
+model StockOpname {
+  id            String            @id @default(uuid())
+  opnameNumber  String            @unique
+  branchId      String
+  status        StockOpnameStatus @default(DRAFT)
+  note          String?
+  createdById   String
+  completedById String?
+  createdAt     DateTime          @default(now())
+  completedAt   DateTime?
+
+  branch      Branch            @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  createdBy   User              @relation("OpnameCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  completedBy User?             @relation("OpnameCompletedBy", fields: [completedById], references: [id], onDelete: SetNull)
+  items       StockOpnameItem[]
+
+  @@index([branchId, createdAt])
+  @@map("stock_opname")
+}
+
+model StockOpnameItem {
+  id          String   @id @default(uuid())
+  opnameId    String
+  productId   String
+  expectedQty Decimal  @db.Decimal(18, 3)
+  countedQty  Decimal? @db.Decimal(18, 3)
+  diffQty     Decimal? @db.Decimal(18, 3) // counted − expected (informasi)
+
+  opname  StockOpname @relation(fields: [opnameId], references: [id], onDelete: Cascade)
+  product Product     @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@unique([opnameId, productId])
+  @@index([opnameId])
+  @@map("stock_opname_item")
+}
+
+// =============================
+// POS: SALES (Phase 4)
+// =============================
+
+enum SaleStatus {
+  COMPLETED
+  CANCELLED
+}
+
+enum SalePaymentStatus {
+  UNPAID
+  PARTIAL
+  PAID
+}
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  QRIS
+  DEBIT
+  CREDIT
+  E_WALLET
+}
+
+enum ReceivableStatus {
+  UNPAID
+  PARTIAL
+  PAID
+}
+
+model Sale {
+  id            String            @id @default(uuid())
+  invoiceNumber String            @unique
+  requestId     String            @unique // D28: idempotency key dari client
+  branchId      String
+  customerId    String?
+  cashierId     String
+  subtotal      Decimal           @db.Decimal(18, 2) // D31
+  discount      Decimal           @default(0) @db.Decimal(18, 2)
+  tax           Decimal           @default(0) @db.Decimal(18, 2)
+  grandTotal    Decimal           @db.Decimal(18, 2)
+  paidAmount    Decimal           @default(0) @db.Decimal(18, 2)
+  changeAmount  Decimal           @default(0) @db.Decimal(18, 2)
+  paymentStatus SalePaymentStatus
+  status        SaleStatus        @default(COMPLETED)
+  note          String?
+  createdAt     DateTime          @default(now())
+
+  branch   Branch    @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  cashier  User      @relation("SaleCashier", fields: [cashierId], references: [id], onDelete: Restrict)
+
+  items      SaleItem[]
+  payments   SalePayment[]
+  receivable Receivable?
+
+  @@index([branchId, createdAt])
+  @@index([customerId])
+  @@index([cashierId, createdAt])
+  @@map("sale")
+}
+
+model SaleItem {
+  id          String  @id @default(uuid())
+  saleId      String
+  productId   String
+  productName String // D30 snapshot
+  sku         String // D30 snapshot
+  quantity    Decimal @db.Decimal(18, 3)
+  unitPrice   Decimal @db.Decimal(18, 2) // harga jual saat transaksi
+  costPrice   Decimal @db.Decimal(18, 2) // D30: harga beli saat transaksi (COGS historis)
+  discount    Decimal @default(0) @db.Decimal(18, 2)
+  taxRate     Decimal @default(0) @db.Decimal(5, 2)
+  subtotal    Decimal @db.Decimal(18, 2) // qty×price − disc (sebelum tax)
+  taxAmount   Decimal @default(0) @db.Decimal(18, 2)
+
+  sale    Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([saleId])
+  @@index([productId])
+  @@map("sale_item")
+}
+
+model SalePayment {
+  id        String        @id @default(uuid())
+  saleId    String
+  method    PaymentMethod
+  amount    Decimal       @db.Decimal(18, 2)
+  reference String? // no. transfer / qr ref
+  createdAt DateTime      @default(now())
+
+  sale Sale @relation(fields: [saleId], references: [id], onDelete: Cascade)
+
+  @@index([saleId])
+  @@map("sale_payment")
+}
+
+/// D33: minimal sekarang, lengkap (payment, statement) di Phase 6
+model Receivable {
+  id         String           @id @default(uuid())
+  saleId     String           @unique
+  branchId   String
+  customerId String
+  amount     Decimal          @db.Decimal(18, 2) // grandTotal − paidAmount
+  paidAmount Decimal          @default(0) @db.Decimal(18, 2)
+  status     ReceivableStatus @default(UNPAID)
+  dueDate    DateTime?
+  createdAt  DateTime         @default(now())
+
+  sale     Sale     @relation(fields: [saleId], references: [id], onDelete: Restrict)
+  branch   Branch   @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Restrict)
+
+  @@index([branchId, status])
+  @@index([customerId])
+  @@map("receivable")
 }

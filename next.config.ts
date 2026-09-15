@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   // VERCEL + NEON PERFORMANCE OPTIMIZATIONS
   // ===========================================
 
+  output: "standalone",
+
   // Enable experimental features for better performance
   experimental: {
     // Optimize package imports (tree shaking)

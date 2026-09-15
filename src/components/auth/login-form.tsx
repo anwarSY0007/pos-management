@@ -64,7 +64,7 @@ export function LoginInForm() {
     }
 
     return (
-        <div className="w-full max-w-[400px] mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="w-full max-w-100 mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Header Section */}
             <div className="flex flex-col space-y-2 text-center md:text-left">
                 <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -181,13 +181,6 @@ export function LoginInForm() {
                 </svg>
                 Sign in with Google
             </Button>
-
-            <div className="text-center text-sm text-slate-600 dark:text-slate-400">
-                Don&apos;t have an account?{" "}
-                <Link href="/choose-role" className="font-semibold text-primary hover:text-primary/80 underline-offset-4 hover:underline transition-all">
-                    Sign up
-                </Link>
-            </div>
 
             <div className="text-center text-[10px] text-slate-400 dark:text-slate-500 pt-4">
                 By continuing, you agree to our Terms and Privacy Policy.
