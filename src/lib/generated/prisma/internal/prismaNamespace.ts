@@ -420,7 +420,19 @@ export const ModelName = {
   StockTransfer: 'StockTransfer',
   StockTransferItem: 'StockTransferItem',
   StockOpname: 'StockOpname',
-  StockOpnameItem: 'StockOpnameItem'
+  StockOpnameItem: 'StockOpnameItem',
+  Sale: 'Sale',
+  SaleItem: 'SaleItem',
+  SalePayment: 'SalePayment',
+  Receivable: 'Receivable',
+  Purchase: 'Purchase',
+  PurchaseItem: 'PurchaseItem',
+  Payable: 'Payable',
+  CashAccount: 'CashAccount',
+  CashTransaction: 'CashTransaction',
+  Expense: 'Expense',
+  ReceivablePayment: 'ReceivablePayment',
+  PayablePayment: 'PayablePayment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -436,7 +448,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "branch" | "userBranch" | "documentSequence" | "systemSetting" | "auditLog" | "chartOfAccount" | "journalEntry" | "journalEntryLine" | "category" | "brand" | "unit" | "product" | "customer" | "supplier" | "productStock" | "stockMovement" | "stockTransfer" | "stockTransferItem" | "stockOpname" | "stockOpnameItem"
+    modelProps: "user" | "session" | "account" | "verification" | "branch" | "userBranch" | "documentSequence" | "systemSetting" | "auditLog" | "chartOfAccount" | "journalEntry" | "journalEntryLine" | "category" | "brand" | "unit" | "product" | "customer" | "supplier" | "productStock" | "stockMovement" | "stockTransfer" | "stockTransferItem" | "stockOpname" | "stockOpnameItem" | "sale" | "saleItem" | "salePayment" | "receivable" | "purchase" | "purchaseItem" | "payable" | "cashAccount" | "cashTransaction" | "expense" | "receivablePayment" | "payablePayment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2216,6 +2228,894 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Sale: {
+      payload: Prisma.$SalePayload<ExtArgs>
+      fields: Prisma.SaleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SaleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SaleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>
+        }
+        findFirst: {
+          args: Prisma.SaleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SaleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>
+        }
+        findMany: {
+          args: Prisma.SaleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>[]
+        }
+        create: {
+          args: Prisma.SaleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>
+        }
+        createMany: {
+          args: Prisma.SaleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SaleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>[]
+        }
+        delete: {
+          args: Prisma.SaleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>
+        }
+        update: {
+          args: Prisma.SaleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>
+        }
+        deleteMany: {
+          args: Prisma.SaleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SaleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SaleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>[]
+        }
+        upsert: {
+          args: Prisma.SaleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePayload>
+        }
+        aggregate: {
+          args: Prisma.SaleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSale>
+        }
+        groupBy: {
+          args: Prisma.SaleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SaleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaleCountAggregateOutputType> | number
+        }
+      }
+    }
+    SaleItem: {
+      payload: Prisma.$SaleItemPayload<ExtArgs>
+      fields: Prisma.SaleItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SaleItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SaleItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>
+        }
+        findFirst: {
+          args: Prisma.SaleItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SaleItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>
+        }
+        findMany: {
+          args: Prisma.SaleItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>[]
+        }
+        create: {
+          args: Prisma.SaleItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>
+        }
+        createMany: {
+          args: Prisma.SaleItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SaleItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>[]
+        }
+        delete: {
+          args: Prisma.SaleItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>
+        }
+        update: {
+          args: Prisma.SaleItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.SaleItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SaleItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SaleItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.SaleItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SaleItemPayload>
+        }
+        aggregate: {
+          args: Prisma.SaleItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSaleItem>
+        }
+        groupBy: {
+          args: Prisma.SaleItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaleItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SaleItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SaleItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    SalePayment: {
+      payload: Prisma.$SalePaymentPayload<ExtArgs>
+      fields: Prisma.SalePaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SalePaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SalePaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.SalePaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SalePaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>
+        }
+        findMany: {
+          args: Prisma.SalePaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>[]
+        }
+        create: {
+          args: Prisma.SalePaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>
+        }
+        createMany: {
+          args: Prisma.SalePaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SalePaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.SalePaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>
+        }
+        update: {
+          args: Prisma.SalePaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.SalePaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SalePaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SalePaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.SalePaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SalePaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.SalePaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSalePayment>
+        }
+        groupBy: {
+          args: Prisma.SalePaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SalePaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SalePaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SalePaymentCountAggregateOutputType> | number
+        }
+      }
+    }
+    Receivable: {
+      payload: Prisma.$ReceivablePayload<ExtArgs>
+      fields: Prisma.ReceivableFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReceivableFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReceivableFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>
+        }
+        findFirst: {
+          args: Prisma.ReceivableFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReceivableFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>
+        }
+        findMany: {
+          args: Prisma.ReceivableFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>[]
+        }
+        create: {
+          args: Prisma.ReceivableCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>
+        }
+        createMany: {
+          args: Prisma.ReceivableCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReceivableCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>[]
+        }
+        delete: {
+          args: Prisma.ReceivableDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>
+        }
+        update: {
+          args: Prisma.ReceivableUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>
+        }
+        deleteMany: {
+          args: Prisma.ReceivableDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReceivableUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReceivableUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>[]
+        }
+        upsert: {
+          args: Prisma.ReceivableUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePayload>
+        }
+        aggregate: {
+          args: Prisma.ReceivableAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReceivable>
+        }
+        groupBy: {
+          args: Prisma.ReceivableGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReceivableGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReceivableCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReceivableCountAggregateOutputType> | number
+        }
+      }
+    }
+    Purchase: {
+      payload: Prisma.$PurchasePayload<ExtArgs>
+      fields: Prisma.PurchaseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PurchaseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PurchaseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>
+        }
+        findFirst: {
+          args: Prisma.PurchaseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PurchaseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>
+        }
+        findMany: {
+          args: Prisma.PurchaseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>[]
+        }
+        create: {
+          args: Prisma.PurchaseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>
+        }
+        createMany: {
+          args: Prisma.PurchaseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PurchaseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>[]
+        }
+        delete: {
+          args: Prisma.PurchaseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>
+        }
+        update: {
+          args: Prisma.PurchaseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>
+        }
+        deleteMany: {
+          args: Prisma.PurchaseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PurchaseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PurchaseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>[]
+        }
+        upsert: {
+          args: Prisma.PurchaseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchasePayload>
+        }
+        aggregate: {
+          args: Prisma.PurchaseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePurchase>
+        }
+        groupBy: {
+          args: Prisma.PurchaseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PurchaseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseCountAggregateOutputType> | number
+        }
+      }
+    }
+    PurchaseItem: {
+      payload: Prisma.$PurchaseItemPayload<ExtArgs>
+      fields: Prisma.PurchaseItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PurchaseItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PurchaseItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>
+        }
+        findFirst: {
+          args: Prisma.PurchaseItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PurchaseItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>
+        }
+        findMany: {
+          args: Prisma.PurchaseItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>[]
+        }
+        create: {
+          args: Prisma.PurchaseItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>
+        }
+        createMany: {
+          args: Prisma.PurchaseItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PurchaseItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>[]
+        }
+        delete: {
+          args: Prisma.PurchaseItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>
+        }
+        update: {
+          args: Prisma.PurchaseItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.PurchaseItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PurchaseItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PurchaseItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.PurchaseItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PurchaseItemPayload>
+        }
+        aggregate: {
+          args: Prisma.PurchaseItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePurchaseItem>
+        }
+        groupBy: {
+          args: Prisma.PurchaseItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PurchaseItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PurchaseItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    Payable: {
+      payload: Prisma.$PayablePayload<ExtArgs>
+      fields: Prisma.PayableFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PayableFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PayableFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>
+        }
+        findFirst: {
+          args: Prisma.PayableFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PayableFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>
+        }
+        findMany: {
+          args: Prisma.PayableFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>[]
+        }
+        create: {
+          args: Prisma.PayableCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>
+        }
+        createMany: {
+          args: Prisma.PayableCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PayableCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>[]
+        }
+        delete: {
+          args: Prisma.PayableDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>
+        }
+        update: {
+          args: Prisma.PayableUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>
+        }
+        deleteMany: {
+          args: Prisma.PayableDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PayableUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PayableUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>[]
+        }
+        upsert: {
+          args: Prisma.PayableUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePayload>
+        }
+        aggregate: {
+          args: Prisma.PayableAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayable>
+        }
+        groupBy: {
+          args: Prisma.PayableGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PayableGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PayableCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PayableCountAggregateOutputType> | number
+        }
+      }
+    }
+    CashAccount: {
+      payload: Prisma.$CashAccountPayload<ExtArgs>
+      fields: Prisma.CashAccountFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CashAccountFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CashAccountFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>
+        }
+        findFirst: {
+          args: Prisma.CashAccountFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CashAccountFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>
+        }
+        findMany: {
+          args: Prisma.CashAccountFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>[]
+        }
+        create: {
+          args: Prisma.CashAccountCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>
+        }
+        createMany: {
+          args: Prisma.CashAccountCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CashAccountCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>[]
+        }
+        delete: {
+          args: Prisma.CashAccountDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>
+        }
+        update: {
+          args: Prisma.CashAccountUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>
+        }
+        deleteMany: {
+          args: Prisma.CashAccountDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CashAccountUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CashAccountUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>[]
+        }
+        upsert: {
+          args: Prisma.CashAccountUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashAccountPayload>
+        }
+        aggregate: {
+          args: Prisma.CashAccountAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCashAccount>
+        }
+        groupBy: {
+          args: Prisma.CashAccountGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CashAccountGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CashAccountCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CashAccountCountAggregateOutputType> | number
+        }
+      }
+    }
+    CashTransaction: {
+      payload: Prisma.$CashTransactionPayload<ExtArgs>
+      fields: Prisma.CashTransactionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CashTransactionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CashTransactionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>
+        }
+        findFirst: {
+          args: Prisma.CashTransactionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CashTransactionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>
+        }
+        findMany: {
+          args: Prisma.CashTransactionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>[]
+        }
+        create: {
+          args: Prisma.CashTransactionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>
+        }
+        createMany: {
+          args: Prisma.CashTransactionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CashTransactionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>[]
+        }
+        delete: {
+          args: Prisma.CashTransactionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>
+        }
+        update: {
+          args: Prisma.CashTransactionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CashTransactionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CashTransactionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CashTransactionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CashTransactionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CashTransactionPayload>
+        }
+        aggregate: {
+          args: Prisma.CashTransactionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCashTransaction>
+        }
+        groupBy: {
+          args: Prisma.CashTransactionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CashTransactionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CashTransactionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CashTransactionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Expense: {
+      payload: Prisma.$ExpensePayload<ExtArgs>
+      fields: Prisma.ExpenseFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ExpenseFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ExpenseFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        findFirst: {
+          args: Prisma.ExpenseFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ExpenseFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        findMany: {
+          args: Prisma.ExpenseFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>[]
+        }
+        create: {
+          args: Prisma.ExpenseCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        createMany: {
+          args: Prisma.ExpenseCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ExpenseCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>[]
+        }
+        delete: {
+          args: Prisma.ExpenseDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        update: {
+          args: Prisma.ExpenseUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        deleteMany: {
+          args: Prisma.ExpenseDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ExpenseUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ExpenseUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>[]
+        }
+        upsert: {
+          args: Prisma.ExpenseUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ExpensePayload>
+        }
+        aggregate: {
+          args: Prisma.ExpenseAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateExpense>
+        }
+        groupBy: {
+          args: Prisma.ExpenseGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpenseGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ExpenseCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ExpenseCountAggregateOutputType> | number
+        }
+      }
+    }
+    ReceivablePayment: {
+      payload: Prisma.$ReceivablePaymentPayload<ExtArgs>
+      fields: Prisma.ReceivablePaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReceivablePaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReceivablePaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.ReceivablePaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReceivablePaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>
+        }
+        findMany: {
+          args: Prisma.ReceivablePaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>[]
+        }
+        create: {
+          args: Prisma.ReceivablePaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>
+        }
+        createMany: {
+          args: Prisma.ReceivablePaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReceivablePaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.ReceivablePaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>
+        }
+        update: {
+          args: Prisma.ReceivablePaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReceivablePaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReceivablePaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReceivablePaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReceivablePaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReceivablePaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.ReceivablePaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReceivablePayment>
+        }
+        groupBy: {
+          args: Prisma.ReceivablePaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReceivablePaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReceivablePaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReceivablePaymentCountAggregateOutputType> | number
+        }
+      }
+    }
+    PayablePayment: {
+      payload: Prisma.$PayablePaymentPayload<ExtArgs>
+      fields: Prisma.PayablePaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PayablePaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PayablePaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.PayablePaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PayablePaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>
+        }
+        findMany: {
+          args: Prisma.PayablePaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>[]
+        }
+        create: {
+          args: Prisma.PayablePaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>
+        }
+        createMany: {
+          args: Prisma.PayablePaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PayablePaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.PayablePaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>
+        }
+        update: {
+          args: Prisma.PayablePaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PayablePaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PayablePaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PayablePaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PayablePaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PayablePaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.PayablePaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayablePayment>
+        }
+        groupBy: {
+          args: Prisma.PayablePaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PayablePaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PayablePaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PayablePaymentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2580,6 +3480,196 @@ export const StockOpnameItemScalarFieldEnum = {
 export type StockOpnameItemScalarFieldEnum = (typeof StockOpnameItemScalarFieldEnum)[keyof typeof StockOpnameItemScalarFieldEnum]
 
 
+export const SaleScalarFieldEnum = {
+  id: 'id',
+  invoiceNumber: 'invoiceNumber',
+  requestId: 'requestId',
+  branchId: 'branchId',
+  customerId: 'customerId',
+  cashierId: 'cashierId',
+  subtotal: 'subtotal',
+  discount: 'discount',
+  tax: 'tax',
+  grandTotal: 'grandTotal',
+  paidAmount: 'paidAmount',
+  changeAmount: 'changeAmount',
+  paymentStatus: 'paymentStatus',
+  status: 'status',
+  note: 'note',
+  createdAt: 'createdAt'
+} as const
+
+export type SaleScalarFieldEnum = (typeof SaleScalarFieldEnum)[keyof typeof SaleScalarFieldEnum]
+
+
+export const SaleItemScalarFieldEnum = {
+  id: 'id',
+  saleId: 'saleId',
+  productId: 'productId',
+  productName: 'productName',
+  sku: 'sku',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  costPrice: 'costPrice',
+  discount: 'discount',
+  taxRate: 'taxRate',
+  subtotal: 'subtotal',
+  taxAmount: 'taxAmount'
+} as const
+
+export type SaleItemScalarFieldEnum = (typeof SaleItemScalarFieldEnum)[keyof typeof SaleItemScalarFieldEnum]
+
+
+export const SalePaymentScalarFieldEnum = {
+  id: 'id',
+  saleId: 'saleId',
+  method: 'method',
+  amount: 'amount',
+  reference: 'reference',
+  createdAt: 'createdAt'
+} as const
+
+export type SalePaymentScalarFieldEnum = (typeof SalePaymentScalarFieldEnum)[keyof typeof SalePaymentScalarFieldEnum]
+
+
+export const ReceivableScalarFieldEnum = {
+  id: 'id',
+  saleId: 'saleId',
+  branchId: 'branchId',
+  customerId: 'customerId',
+  amount: 'amount',
+  paidAmount: 'paidAmount',
+  status: 'status',
+  dueDate: 'dueDate',
+  createdAt: 'createdAt'
+} as const
+
+export type ReceivableScalarFieldEnum = (typeof ReceivableScalarFieldEnum)[keyof typeof ReceivableScalarFieldEnum]
+
+
+export const PurchaseScalarFieldEnum = {
+  id: 'id',
+  purchaseNumber: 'purchaseNumber',
+  branchId: 'branchId',
+  supplierId: 'supplierId',
+  createdById: 'createdById',
+  status: 'status',
+  note: 'note',
+  expectedAt: 'expectedAt',
+  orderedAt: 'orderedAt',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PurchaseScalarFieldEnum = (typeof PurchaseScalarFieldEnum)[keyof typeof PurchaseScalarFieldEnum]
+
+
+export const PurchaseItemScalarFieldEnum = {
+  id: 'id',
+  purchaseId: 'purchaseId',
+  productId: 'productId',
+  quantity: 'quantity',
+  quantityReceived: 'quantityReceived',
+  unitCost: 'unitCost',
+  subtotal: 'subtotal'
+} as const
+
+export type PurchaseItemScalarFieldEnum = (typeof PurchaseItemScalarFieldEnum)[keyof typeof PurchaseItemScalarFieldEnum]
+
+
+export const PayableScalarFieldEnum = {
+  id: 'id',
+  purchaseId: 'purchaseId',
+  branchId: 'branchId',
+  supplierId: 'supplierId',
+  amount: 'amount',
+  paidAmount: 'paidAmount',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type PayableScalarFieldEnum = (typeof PayableScalarFieldEnum)[keyof typeof PayableScalarFieldEnum]
+
+
+export const CashAccountScalarFieldEnum = {
+  id: 'id',
+  branchId: 'branchId',
+  name: 'name',
+  type: 'type',
+  accountNumber: 'accountNumber',
+  currentBalance: 'currentBalance',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CashAccountScalarFieldEnum = (typeof CashAccountScalarFieldEnum)[keyof typeof CashAccountScalarFieldEnum]
+
+
+export const CashTransactionScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  branchId: 'branchId',
+  type: 'type',
+  amount: 'amount',
+  balanceAfter: 'balanceAfter',
+  referenceType: 'referenceType',
+  referenceId: 'referenceId',
+  note: 'note',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type CashTransactionScalarFieldEnum = (typeof CashTransactionScalarFieldEnum)[keyof typeof CashTransactionScalarFieldEnum]
+
+
+export const ExpenseScalarFieldEnum = {
+  id: 'id',
+  expenseNumber: 'expenseNumber',
+  branchId: 'branchId',
+  accountId: 'accountId',
+  expenseAccount: 'expenseAccount',
+  category: 'category',
+  description: 'description',
+  amount: 'amount',
+  expenseDate: 'expenseDate',
+  attachmentUrl: 'attachmentUrl',
+  note: 'note',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type ExpenseScalarFieldEnum = (typeof ExpenseScalarFieldEnum)[keyof typeof ExpenseScalarFieldEnum]
+
+
+export const ReceivablePaymentScalarFieldEnum = {
+  id: 'id',
+  receivableId: 'receivableId',
+  accountId: 'accountId',
+  amount: 'amount',
+  method: 'method',
+  reference: 'reference',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type ReceivablePaymentScalarFieldEnum = (typeof ReceivablePaymentScalarFieldEnum)[keyof typeof ReceivablePaymentScalarFieldEnum]
+
+
+export const PayablePaymentScalarFieldEnum = {
+  id: 'id',
+  payableId: 'payableId',
+  accountId: 'accountId',
+  amount: 'amount',
+  method: 'method',
+  reference: 'reference',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type PayablePaymentScalarFieldEnum = (typeof PayablePaymentScalarFieldEnum)[keyof typeof PayablePaymentScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2824,6 +3914,118 @@ export type ListEnumStockOpnameStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'SalePaymentStatus'
+ */
+export type EnumSalePaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalePaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SalePaymentStatus[]'
+ */
+export type ListEnumSalePaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalePaymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SaleStatus'
+ */
+export type EnumSaleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SaleStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SaleStatus[]'
+ */
+export type ListEnumSaleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SaleStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod'
+ */
+export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod[]'
+ */
+export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReceivableStatus'
+ */
+export type EnumReceivableStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReceivableStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ReceivableStatus[]'
+ */
+export type ListEnumReceivableStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReceivableStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseStatus'
+ */
+export type EnumPurchaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PurchaseStatus[]'
+ */
+export type ListEnumPurchaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PurchaseStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PayableStatus'
+ */
+export type EnumPayableStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PayableStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PayableStatus[]'
+ */
+export type ListEnumPayableStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PayableStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CashAccountType'
+ */
+export type EnumCashAccountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CashAccountType'>
+    
+
+
+/**
+ * Reference to a field of type 'CashAccountType[]'
+ */
+export type ListEnumCashAccountTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CashAccountType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CashTransactionType'
+ */
+export type EnumCashTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CashTransactionType'>
+    
+
+
+/**
+ * Reference to a field of type 'CashTransactionType[]'
+ */
+export type ListEnumCashTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CashTransactionType[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3011,6 +4213,18 @@ export type GlobalOmitConfig = {
   stockTransferItem?: Prisma.StockTransferItemOmit
   stockOpname?: Prisma.StockOpnameOmit
   stockOpnameItem?: Prisma.StockOpnameItemOmit
+  sale?: Prisma.SaleOmit
+  saleItem?: Prisma.SaleItemOmit
+  salePayment?: Prisma.SalePaymentOmit
+  receivable?: Prisma.ReceivableOmit
+  purchase?: Prisma.PurchaseOmit
+  purchaseItem?: Prisma.PurchaseItemOmit
+  payable?: Prisma.PayableOmit
+  cashAccount?: Prisma.CashAccountOmit
+  cashTransaction?: Prisma.CashTransactionOmit
+  expense?: Prisma.ExpenseOmit
+  receivablePayment?: Prisma.ReceivablePaymentOmit
+  payablePayment?: Prisma.PayablePaymentOmit
 }
 
 /* Types for Logging */

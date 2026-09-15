@@ -13,6 +13,7 @@ describe("RBAC matrix", () => {
         expect(hasPermission("CASHIER", "payment.create")).toBe(true);
         expect(hasPermission("CASHIER", "customer.create")).toBe(true);
         expect(hasPermission("CASHIER", "inventory.adjust")).toBe(false);
+        expect(hasPermission("CASHIER", "cash.manage")).toBe(false);
         expect(hasPermission("CASHIER", "sale.cancel")).toBe(false);
         expect(hasPermission("CASHIER", "purchase.receive")).toBe(false);
         expect(hasPermission("CASHIER", "user.update")).toBe(false);

@@ -5,7 +5,10 @@ import {
   Folder,
   LayoutDashboard,
   Package,
+  PackagePlus,
+  Receipt,
   Settings,
+  ShoppingCart,
   TrafficCone,
   Truck,
   Users,
@@ -32,6 +35,13 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/dashboard",
     permission: "dashboard.view",
     icon: LayoutDashboard,
+  },
+  { label: "POS", href: "/pos", permission: "sale.create", icon: ShoppingCart },
+  {
+    label: "Penjualan",
+    href: "/sales",
+    permission: "sale.view",
+    icon: Receipt,
   },
   {
     label: "Pengaturan",
@@ -86,6 +96,12 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/inventory/opnames",
     permission: "inventory.view",
     icon: ClipboardCheck,
+  },
+  {
+    label: "Pembelian",
+    href: "/purchases",
+    permission: "purchase.view",
+    icon: PackagePlus,
   },
 ];
 

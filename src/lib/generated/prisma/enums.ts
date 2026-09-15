@@ -85,3 +85,83 @@ export const StockOpnameStatus = {
 } as const
 
 export type StockOpnameStatus = (typeof StockOpnameStatus)[keyof typeof StockOpnameStatus]
+
+
+export const SaleStatus = {
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type SaleStatus = (typeof SaleStatus)[keyof typeof SaleStatus]
+
+
+export const SalePaymentStatus = {
+  UNPAID: 'UNPAID',
+  PARTIAL: 'PARTIAL',
+  PAID: 'PAID'
+} as const
+
+export type SalePaymentStatus = (typeof SalePaymentStatus)[keyof typeof SalePaymentStatus]
+
+
+export const PaymentMethod = {
+  CASH: 'CASH',
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  QRIS: 'QRIS',
+  DEBIT: 'DEBIT',
+  CREDIT: 'CREDIT',
+  E_WALLET: 'E_WALLET'
+} as const
+
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
+export const ReceivableStatus = {
+  UNPAID: 'UNPAID',
+  PARTIAL: 'PARTIAL',
+  PAID: 'PAID'
+} as const
+
+export type ReceivableStatus = (typeof ReceivableStatus)[keyof typeof ReceivableStatus]
+
+
+export const PurchaseStatus = {
+  DRAFT: 'DRAFT',
+  ORDERED: 'ORDERED',
+  PARTIAL: 'PARTIAL',
+  RECEIVED: 'RECEIVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type PurchaseStatus = (typeof PurchaseStatus)[keyof typeof PurchaseStatus]
+
+
+export const PayableStatus = {
+  UNPAID: 'UNPAID',
+  PARTIAL: 'PARTIAL',
+  PAID: 'PAID'
+} as const
+
+export type PayableStatus = (typeof PayableStatus)[keyof typeof PayableStatus]
+
+
+export const CashAccountType = {
+  CASH: 'CASH',
+  BANK: 'BANK'
+} as const
+
+export type CashAccountType = (typeof CashAccountType)[keyof typeof CashAccountType]
+
+
+export const CashTransactionType = {
+  SALE: 'SALE',
+  PURCHASE: 'PURCHASE',
+  EXPENSE: 'EXPENSE',
+  RECEIVABLE_PAYMENT: 'RECEIVABLE_PAYMENT',
+  PAYABLE_PAYMENT: 'PAYABLE_PAYMENT',
+  TRANSFER: 'TRANSFER',
+  ADJUSTMENT: 'ADJUSTMENT',
+  OTHER: 'OTHER'
+} as const
+
+export type CashTransactionType = (typeof CashTransactionType)[keyof typeof CashTransactionType]

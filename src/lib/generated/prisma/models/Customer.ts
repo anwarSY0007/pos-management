@@ -256,6 +256,8 @@ export type CustomerWhereInput = {
   status?: Prisma.EnumPartyStatusFilter<"Customer"> | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  sales?: Prisma.SaleListRelationFilter
+  receivables?: Prisma.ReceivableListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
@@ -269,6 +271,8 @@ export type CustomerOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  sales?: Prisma.SaleOrderByRelationAggregateInput
+  receivables?: Prisma.ReceivableOrderByRelationAggregateInput
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -285,6 +289,8 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumPartyStatusFilter<"Customer"> | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
+  sales?: Prisma.SaleListRelationFilter
+  receivables?: Prisma.ReceivableListRelationFilter
 }, "id" | "customerCode">
 
 export type CustomerOrderByWithAggregationInput = {
@@ -332,6 +338,8 @@ export type CustomerCreateInput = {
   status?: $Enums.PartyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  sales?: Prisma.SaleCreateNestedManyWithoutCustomerInput
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
@@ -345,6 +353,8 @@ export type CustomerUncheckedCreateInput = {
   status?: $Enums.PartyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutCustomerInput
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
@@ -358,6 +368,8 @@ export type CustomerUpdateInput = {
   status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sales?: Prisma.SaleUpdateManyWithoutCustomerNestedInput
+  receivables?: Prisma.ReceivableUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
@@ -371,6 +383,8 @@ export type CustomerUncheckedUpdateInput = {
   status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutCustomerNestedInput
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
@@ -459,10 +473,232 @@ export type CustomerSumOrderByAggregateInput = {
   creditLimit?: Prisma.SortOrder
 }
 
+export type CustomerNullableScalarRelationFilter = {
+  is?: Prisma.CustomerWhereInput | null
+  isNot?: Prisma.CustomerWhereInput | null
+}
+
+export type CustomerScalarRelationFilter = {
+  is?: Prisma.CustomerWhereInput
+  isNot?: Prisma.CustomerWhereInput
+}
+
 export type EnumPartyStatusFieldUpdateOperationsInput = {
   set?: $Enums.PartyStatus
 }
 
+export type CustomerCreateNestedOneWithoutSalesInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutSalesInput, Prisma.CustomerUncheckedCreateWithoutSalesInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutSalesInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneWithoutSalesNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutSalesInput, Prisma.CustomerUncheckedCreateWithoutSalesInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutSalesInput
+  upsert?: Prisma.CustomerUpsertWithoutSalesInput
+  disconnect?: Prisma.CustomerWhereInput | boolean
+  delete?: Prisma.CustomerWhereInput | boolean
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutSalesInput, Prisma.CustomerUpdateWithoutSalesInput>, Prisma.CustomerUncheckedUpdateWithoutSalesInput>
+}
+
+export type CustomerCreateNestedOneWithoutReceivablesInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutReceivablesInput, Prisma.CustomerUncheckedCreateWithoutReceivablesInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutReceivablesInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneRequiredWithoutReceivablesNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutReceivablesInput, Prisma.CustomerUncheckedCreateWithoutReceivablesInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutReceivablesInput
+  upsert?: Prisma.CustomerUpsertWithoutReceivablesInput
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutReceivablesInput, Prisma.CustomerUpdateWithoutReceivablesInput>, Prisma.CustomerUncheckedUpdateWithoutReceivablesInput>
+}
+
+export type CustomerCreateWithoutSalesInput = {
+  id?: string
+  customerCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  receivables?: Prisma.ReceivableCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutSalesInput = {
+  id?: string
+  customerCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  receivables?: Prisma.ReceivableUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutSalesInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutSalesInput, Prisma.CustomerUncheckedCreateWithoutSalesInput>
+}
+
+export type CustomerUpsertWithoutSalesInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutSalesInput, Prisma.CustomerUncheckedUpdateWithoutSalesInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutSalesInput, Prisma.CustomerUncheckedCreateWithoutSalesInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutSalesInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutSalesInput, Prisma.CustomerUncheckedUpdateWithoutSalesInput>
+}
+
+export type CustomerUpdateWithoutSalesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  receivables?: Prisma.ReceivableUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutSalesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  receivables?: Prisma.ReceivableUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerCreateWithoutReceivablesInput = {
+  id?: string
+  customerCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sales?: Prisma.SaleCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutReceivablesInput = {
+  id?: string
+  customerCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  creditLimit?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sales?: Prisma.SaleUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutReceivablesInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutReceivablesInput, Prisma.CustomerUncheckedCreateWithoutReceivablesInput>
+}
+
+export type CustomerUpsertWithoutReceivablesInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutReceivablesInput, Prisma.CustomerUncheckedUpdateWithoutReceivablesInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutReceivablesInput, Prisma.CustomerUncheckedCreateWithoutReceivablesInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutReceivablesInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutReceivablesInput, Prisma.CustomerUncheckedUpdateWithoutReceivablesInput>
+}
+
+export type CustomerUpdateWithoutReceivablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sales?: Prisma.SaleUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutReceivablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customerCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  creditLimit?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sales?: Prisma.SaleUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
+
+/**
+ * Count Type CustomerCountOutputType
+ */
+
+export type CustomerCountOutputType = {
+  sales: number
+  receivables: number
+}
+
+export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  sales?: boolean | CustomerCountOutputTypeCountSalesArgs
+  receivables?: boolean | CustomerCountOutputTypeCountReceivablesArgs
+}
+
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CustomerCountOutputType
+   */
+  select?: Prisma.CustomerCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountSalesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SaleWhereInput
+}
+
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountReceivablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReceivableWhereInput
+}
 
 
 export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -476,6 +712,9 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  sales?: boolean | Prisma.Customer$salesArgs<ExtArgs>
+  receivables?: boolean | Prisma.Customer$receivablesArgs<ExtArgs>
+  _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
 export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -518,10 +757,20 @@ export type CustomerSelectScalar = {
 }
 
 export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerCode" | "name" | "phone" | "email" | "address" | "creditLimit" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
+export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  sales?: boolean | Prisma.Customer$salesArgs<ExtArgs>
+  receivables?: boolean | Prisma.Customer$receivablesArgs<ExtArgs>
+  _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type CustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type CustomerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Customer"
-  objects: {}
+  objects: {
+    sales: Prisma.$SalePayload<ExtArgs>[]
+    receivables: Prisma.$ReceivablePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     customerCode: string
@@ -927,6 +1176,8 @@ readonly fields: CustomerFieldRefs;
  */
 export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  sales<T extends Prisma.Customer$salesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$salesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  receivables<T extends Prisma.Customer$receivablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$receivablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReceivablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -983,6 +1234,10 @@ export type CustomerFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  /**
    * Filter, which Customer to fetch.
    */
   where: Prisma.CustomerWhereUniqueInput
@@ -1001,6 +1256,10 @@ export type CustomerFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  /**
    * Filter, which Customer to fetch.
    */
   where: Prisma.CustomerWhereUniqueInput
@@ -1018,6 +1277,10 @@ export type CustomerFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Customer
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
   /**
    * Filter, which Customer to fetch.
    */
@@ -1067,6 +1330,10 @@ export type CustomerFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  /**
    * Filter, which Customer to fetch.
    */
   where?: Prisma.CustomerWhereInput
@@ -1114,6 +1381,10 @@ export type CustomerFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Customer
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
   /**
    * Filter, which Customers to fetch.
    */
@@ -1163,6 +1434,10 @@ export type CustomerCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  /**
    * The data needed to create a Customer.
    */
   data: Prisma.XOR<Prisma.CustomerCreateInput, Prisma.CustomerUncheckedCreateInput>
@@ -1210,6 +1485,10 @@ export type CustomerUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Customer
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
   /**
    * The data needed to update a Customer.
    */
@@ -1277,6 +1556,10 @@ export type CustomerUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  /**
    * The filter to search for the Customer to update in case it exists.
    */
   where: Prisma.CustomerWhereUniqueInput
@@ -1303,6 +1586,10 @@ export type CustomerDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
+  /**
    * Filter which Customer to delete.
    */
   where: Prisma.CustomerWhereUniqueInput
@@ -1323,6 +1610,54 @@ export type CustomerDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Customer.sales
+ */
+export type Customer$salesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Sale
+   */
+  select?: Prisma.SaleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Sale
+   */
+  omit?: Prisma.SaleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SaleInclude<ExtArgs> | null
+  where?: Prisma.SaleWhereInput
+  orderBy?: Prisma.SaleOrderByWithRelationInput | Prisma.SaleOrderByWithRelationInput[]
+  cursor?: Prisma.SaleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SaleScalarFieldEnum | Prisma.SaleScalarFieldEnum[]
+}
+
+/**
+ * Customer.receivables
+ */
+export type Customer$receivablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Receivable
+   */
+  select?: Prisma.ReceivableSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Receivable
+   */
+  omit?: Prisma.ReceivableOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReceivableInclude<ExtArgs> | null
+  where?: Prisma.ReceivableWhereInput
+  orderBy?: Prisma.ReceivableOrderByWithRelationInput | Prisma.ReceivableOrderByWithRelationInput[]
+  cursor?: Prisma.ReceivableWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReceivableScalarFieldEnum | Prisma.ReceivableScalarFieldEnum[]
+}
+
+/**
  * Customer without action
  */
 export type CustomerDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1334,4 +1669,8 @@ export type CustomerDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Customer
    */
   omit?: Prisma.CustomerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomerInclude<ExtArgs> | null
 }

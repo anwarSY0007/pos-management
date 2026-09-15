@@ -38,6 +38,11 @@ model User {
   opnamesCreated    StockOpname[]   @relation("OpnameCreatedBy")
   opnamesCompleted  StockOpname[]   @relation("OpnameCompletedBy")
   sales             Sale[]          @relation("SaleCashier")
+  purchasesCreated  Purchase[]      @relation("PurchaseCreatedBy")
+  cashTransactions CashTransaction[]
+  expenses Expense[]
+  receivablePayments ReceivablePayment[]
+  payablePayments PayablePayment[]
 
   @@unique([email])
   @@map("user")
@@ -119,6 +124,10 @@ model Branch {
   transfersIn    StockTransfer[] @relation("TransferTo")
   opnames        StockOpname[]
   receivables    Receivable[]
+  purchases      Purchase[]
+  payables       Payable[]
+  cashAccounts CashAccount[]
+  expenses Expense[]
 
   @@map("branch")
 }
@@ -311,9 +320,10 @@ model Product {
   status        ProductStatus @default(ACTIVE)
   imageUrl      String?
 
-  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  brand    Brand?    @relation(fields: [brandId], references: [id], onDelete: SetNull)
-  unit     Unit?     @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  category      Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  brand         Brand?         @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  unit          Unit?          @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  purchaseItems PurchaseItem[]
 
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt
@@ -357,6 +367,9 @@ model Supplier {
   email        String?
   address      String?
   status       PartyStatus @default(ACTIVE)
+
+  purchases Purchase[]
+  payables  Payable[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -616,6 +629,7 @@ model Receivable {
   status     ReceivableStatus @default(UNPAID)
   dueDate    DateTime?
   createdAt  DateTime         @default(now())
+  payments ReceivablePayment[]
 
   sale     Sale     @relation(fields: [saleId], references: [id], onDelete: Restrict)
   branch   Branch   @relation(fields: [branchId], references: [id], onDelete: Restrict)
@@ -624,4 +638,208 @@ model Receivable {
   @@index([branchId, status])
   @@index([customerId])
   @@map("receivable")
+}
+
+// =============================
+// POS: PURCHASE (Phase 5)
+// =============================
+
+enum PurchaseStatus {
+  DRAFT
+  ORDERED
+  PARTIAL
+  RECEIVED
+  CANCELLED
+}
+
+enum PayableStatus {
+  UNPAID
+  PARTIAL
+  PAID
+}
+
+model Purchase {
+  id             String         @id @default(uuid())
+  purchaseNumber String         @unique
+  branchId       String
+  supplierId     String
+  createdById    String
+  payable        Payable?
+  status         PurchaseStatus @default(DRAFT)
+  note           String?
+  expectedAt     DateTime?
+  orderedAt      DateTime?
+  receivedAt     DateTime?
+  createdAt      DateTime       @default(now())
+
+  branch    Branch   @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  supplier  Supplier @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+  createdBy User     @relation("PurchaseCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+
+  items PurchaseItem[]
+
+  @@index([branchId, createdAt])
+  @@index([supplierId])
+  @@map("purchase")
+}
+
+model PurchaseItem {
+  id               String  @id @default(uuid())
+  purchaseId       String
+  productId        String
+  quantity         Decimal @db.Decimal(18, 3) // dipesan
+  quantityReceived Decimal @default(0) @db.Decimal(18, 3)
+  unitCost         Decimal @db.Decimal(18, 2) // D40: harga per-PO
+  subtotal         Decimal @db.Decimal(18, 2) // qty × unitCost
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+  product  Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@index([purchaseId])
+  @@index([productId])
+  @@map("purchase_item")
+}
+
+model Payable {
+  id         String        @id @default(uuid())
+  purchaseId String        @unique
+  branchId   String
+  supplierId String
+  payments PayablePayment[]
+  amount     Decimal       @db.Decimal(18, 2) // akumulasi nilai diterima
+  paidAmount Decimal       @default(0) @db.Decimal(18, 2)
+  status     PayableStatus @default(UNPAID)
+  createdAt  DateTime      @default(now())
+
+  purchase Purchase @relation(fields: [purchaseId], references: [id], onDelete: Restrict)
+  branch   Branch   @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  supplier Supplier @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+
+  @@index([branchId, status])
+  @@index([supplierId])
+  @@map("payable")
+}
+
+// =============================
+// POS: FINANCE (Phase 6)
+// =============================
+
+enum CashAccountType {
+  CASH
+  BANK
+}
+
+enum CashTransactionType {
+  SALE
+  PURCHASE
+  EXPENSE
+  RECEIVABLE_PAYMENT
+  PAYABLE_PAYMENT
+  TRANSFER
+  ADJUSTMENT
+  OTHER
+}
+
+model CashAccount {
+  id             String          @id @default(uuid())
+  branchId       String
+  name           String
+  type           CashAccountType
+  accountNumber  String? // no. rekening (BANK)
+  currentBalance Decimal         @default(0) @db.Decimal(18, 2)
+  isActive       Boolean         @default(true)
+
+  branch            Branch              @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  transactions      CashTransaction[]
+  expenses          Expense[]
+  receivablePayments ReceivablePayment[]
+  payablePayments   PayablePayment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([branchId])
+  @@map("cash_account")
+}
+
+/// amount SIGNED: masuk (+), keluar (−). balanceAfter = snapshot audit.
+model CashTransaction {
+  id            String              @id @default(uuid())
+  accountId     String
+  branchId      String
+  type          CashTransactionType
+  amount        Decimal             @db.Decimal(18, 2)
+  balanceAfter  Decimal             @db.Decimal(18, 2)
+  referenceType String?
+  referenceId   String?
+  note          String?
+  userId        String
+  createdAt     DateTime            @default(now())
+
+  account CashAccount @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([accountId, createdAt])
+  @@index([branchId, createdAt])
+  @@map("cash_transaction")
+}
+
+model Expense {
+  id             String   @id @default(uuid())
+  expenseNumber  String   @unique
+  branchId       String
+  accountId      String // kas/bank sumber
+  expenseAccount String // kode COA beban "6-xxxx"
+  category       String // label: Listrik, Sewa, Gaji…
+  description    String?
+  amount         Decimal  @db.Decimal(18, 2)
+  expenseDate    DateTime
+  attachmentUrl  String?
+  note           String?
+  userId         String
+  createdAt      DateTime @default(now())
+
+  branch  Branch      @relation(fields: [branchId], references: [id], onDelete: Restrict)
+  account CashAccount @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([branchId, expenseDate])
+  @@index([expenseAccount])
+  @@map("expense")
+}
+
+model ReceivablePayment {
+  id           String        @id @default(uuid())
+  receivableId String
+  accountId    String
+  amount       Decimal       @db.Decimal(18, 2)
+  method       PaymentMethod
+  reference    String?
+  userId       String
+  createdAt    DateTime      @default(now())
+
+  receivable Receivable   @relation(fields: [receivableId], references: [id], onDelete: Restrict)
+  account    CashAccount  @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  user       User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([receivableId])
+  @@map("receivable_payment")
+}
+
+model PayablePayment {
+  id        String        @id @default(uuid())
+  payableId String
+  accountId String
+  amount    Decimal       @db.Decimal(18, 2)
+  method    PaymentMethod
+  reference String?
+  userId    String
+  createdAt DateTime      @default(now())
+
+  payable Payable     @relation(fields: [payableId], references: [id], onDelete: Restrict)
+  account CashAccount @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  user    User        @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  @@index([payableId])
+  @@map("payable_payment")
 }

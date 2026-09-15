@@ -22,10 +22,11 @@ describe("createProductSchema", () => {
     });
 
     it("taxRate opsional — boleh tidak dikirim", () => {
-    const { taxRate, ...withoutTax } = valid;
-    const parsed = createProductSchema.parse(withoutTax);
-    expect(parsed.taxRate).toBeUndefined();
-});
+      const withoutTax: Record<string, string> = { ...valid };
+      delete withoutTax.taxRate;
+      const parsed = createProductSchema.parse(withoutTax);
+      expect(parsed.taxRate).toBeUndefined();
+    });
 });
 
 describe("productListSchema (searchParams mentah dari URL)", () => {

@@ -138,3 +138,63 @@ export type StockOpname = Prisma.StockOpnameModel
  * 
  */
 export type StockOpnameItem = Prisma.StockOpnameItemModel
+/**
+ * Model Sale
+ * 
+ */
+export type Sale = Prisma.SaleModel
+/**
+ * Model SaleItem
+ * 
+ */
+export type SaleItem = Prisma.SaleItemModel
+/**
+ * Model SalePayment
+ * 
+ */
+export type SalePayment = Prisma.SalePaymentModel
+/**
+ * Model Receivable
+ * D33: minimal sekarang, lengkap (payment, statement) di Phase 6
+ */
+export type Receivable = Prisma.ReceivableModel
+/**
+ * Model Purchase
+ * 
+ */
+export type Purchase = Prisma.PurchaseModel
+/**
+ * Model PurchaseItem
+ * 
+ */
+export type PurchaseItem = Prisma.PurchaseItemModel
+/**
+ * Model Payable
+ * 
+ */
+export type Payable = Prisma.PayableModel
+/**
+ * Model CashAccount
+ * 
+ */
+export type CashAccount = Prisma.CashAccountModel
+/**
+ * Model CashTransaction
+ * amount SIGNED: masuk (+), keluar (−). balanceAfter = snapshot audit.
+ */
+export type CashTransaction = Prisma.CashTransactionModel
+/**
+ * Model Expense
+ * 
+ */
+export type Expense = Prisma.ExpenseModel
+/**
+ * Model ReceivablePayment
+ * 
+ */
+export type ReceivablePayment = Prisma.ReceivablePaymentModel
+/**
+ * Model PayablePayment
+ * 
+ */
+export type PayablePayment = Prisma.PayablePaymentModel

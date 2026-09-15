@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { requirePermission } from "@/lib/permissions/authorize";
 import { inventoryService } from "@/services/inventory.service";
 import { OpnameCompleteForm } from "@/components/inventory/opname-complete-form";
-import { formatIDR } from "@/lib/utils/format";
 import { toMoney } from "@/lib/utils/money";
 
 export default async function OpnameDetailPage({

@@ -21,7 +21,7 @@ export type CartTotals = {
 };
 
 const minMoney = (a: Money, b: Money) => (a.lte(b) ? a : b);
-
+const maxMoney = (a: Money, b: Money) => (a.gte(b) ? a : b);
 
 
 /** D29/D31 — SEMUA angka final ditentukan di sini, di server. */
@@ -54,4 +54,42 @@ export function computeCart(
   const grandTotal = subtotal.minus(discount).plus(tax);
 
   return { lines, subtotal, discount, tax, grandTotal };
+}
+
+export type PaymentInput = { method: string; amount: Money };
+
+export type PaymentAllocation = {
+  cashNet: Money; // kas yang benar-benar masuk
+  bankNet: Money; // non-tunai yang masuk
+  ar: Money; // sisa → piutang
+  change: Money; // kembalian
+  effectivePaid: Money;
+};
+
+/** D32/D35 — alokasi deterministik; dipakai checkout & cancel (reversal). */
+export function allocatePayments(
+  payments: PaymentInput[],
+  grandTotal: Money,
+): PaymentAllocation {
+  let cash = toMoney(0);
+  let nonCash = toMoney(0);
+  for (const p of payments) {
+    if (p.amount.lte(0)) continue;
+    if (p.method === "CASH") cash = cash.plus(p.amount);
+    else nonCash = nonCash.plus(p.amount);
+  }
+
+  // Non-tunai tidak boleh melebihi total (tidak ada "kembalian" transfer)
+  if (nonCash.gt(grandTotal)) {
+    throw new Error("OVERPAYMENT");
+  }
+
+  const bankNet = nonCash;
+  const remainingToPay = maxMoney(grandTotal.minus(nonCash), toMoney(0));
+  const cashNet = minMoney(cash, remainingToPay);
+  const effectivePaid = bankNet.plus(cashNet);
+  const change = cash.minus(cashNet);
+  const ar = grandTotal.minus(effectivePaid);
+
+  return { cashNet, bankNet, ar, change, effectivePaid };
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { computeCart } from "@/lib/sales/pricing";
+import { allocatePayments, computeCart } from "@/lib/sales/pricing";
 import { toMoney } from "@/lib/utils/money";
 
 const line = (price: string, qty: string, disc = "0", tax = "0") => ({
@@ -61,5 +61,41 @@ describe("computeCart (server-side pricing)", () => {
 
   it("qty ≤ 0 → error", () => {
     expect(() => computeCart([line("4000", "0")], toMoney(0))).toThrow();
+  });
+});
+
+describe("allocatePayments", () => {
+  const pay = (method: string, amount: string) => ({
+    method,
+    amount: toMoney(amount),
+  });
+
+  it("tunai lebih → kembalian benar, paid = total", () => {
+    const r = allocatePayments([pay("CASH", "50000")], toMoney("35000"));
+    expect(r.effectivePaid.toFixed(2)).toBe("35000.00");
+    expect(r.change.toFixed(2)).toBe("15000.00");
+    expect(r.ar.toFixed(2)).toBe("0.00");
+  });
+
+  it("campuran tunai + QRIS", () => {
+    const r = allocatePayments(
+      [pay("CASH", "10000"), pay("QRIS", "20000")],
+      toMoney("35000"),
+    );
+    expect(r.bankNet.toFixed(2)).toBe("20000.00");
+    expect(r.cashNet.toFixed(2)).toBe("10000.00");
+    expect(r.change.toFixed(2)).toBe("0.00");
+    expect(r.ar.toFixed(2)).toBe("5000.00");
+  });
+
+  it("non-tunai melebihi total → OVERPAYMENT", () => {
+    expect(() =>
+      allocatePayments([pay("DEBIT", "40000")], toMoney("35000")),
+    ).toThrow("OVERPAYMENT");
+  });
+
+  it("bayar kurang → ar = sisa", () => {
+    const r = allocatePayments([pay("CASH", "10000")], toMoney("35000"));
+    expect(r.ar.toFixed(2)).toBe("25000.00");
   });
 });

@@ -214,6 +214,8 @@ export type SupplierWhereInput = {
   status?: Prisma.EnumPartyStatusFilter<"Supplier"> | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
+  purchases?: Prisma.PurchaseListRelationFilter
+  payables?: Prisma.PayableListRelationFilter
 }
 
 export type SupplierOrderByWithRelationInput = {
@@ -226,6 +228,8 @@ export type SupplierOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  purchases?: Prisma.PurchaseOrderByRelationAggregateInput
+  payables?: Prisma.PayableOrderByRelationAggregateInput
 }
 
 export type SupplierWhereUniqueInput = Prisma.AtLeast<{
@@ -241,6 +245,8 @@ export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumPartyStatusFilter<"Supplier"> | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Supplier"> | Date | string
+  purchases?: Prisma.PurchaseListRelationFilter
+  payables?: Prisma.PayableListRelationFilter
 }, "id" | "supplierCode">
 
 export type SupplierOrderByWithAggregationInput = {
@@ -283,6 +289,8 @@ export type SupplierCreateInput = {
   status?: $Enums.PartyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  purchases?: Prisma.PurchaseCreateNestedManyWithoutSupplierInput
+  payables?: Prisma.PayableCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUncheckedCreateInput = {
@@ -295,6 +303,8 @@ export type SupplierUncheckedCreateInput = {
   status?: $Enums.PartyStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutSupplierInput
+  payables?: Prisma.PayableUncheckedCreateNestedManyWithoutSupplierInput
 }
 
 export type SupplierUpdateInput = {
@@ -307,6 +317,8 @@ export type SupplierUpdateInput = {
   status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchases?: Prisma.PurchaseUpdateManyWithoutSupplierNestedInput
+  payables?: Prisma.PayableUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierUncheckedUpdateInput = {
@@ -319,6 +331,8 @@ export type SupplierUncheckedUpdateInput = {
   status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutSupplierNestedInput
+  payables?: Prisma.PayableUncheckedUpdateManyWithoutSupplierNestedInput
 }
 
 export type SupplierCreateManyInput = {
@@ -393,6 +407,213 @@ export type SupplierMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type SupplierScalarRelationFilter = {
+  is?: Prisma.SupplierWhereInput
+  isNot?: Prisma.SupplierWhereInput
+}
+
+export type SupplierCreateNestedOneWithoutPurchasesInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutPurchasesInput, Prisma.SupplierUncheckedCreateWithoutPurchasesInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutPurchasesInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutPurchasesNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutPurchasesInput, Prisma.SupplierUncheckedCreateWithoutPurchasesInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutPurchasesInput
+  upsert?: Prisma.SupplierUpsertWithoutPurchasesInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutPurchasesInput, Prisma.SupplierUpdateWithoutPurchasesInput>, Prisma.SupplierUncheckedUpdateWithoutPurchasesInput>
+}
+
+export type SupplierCreateNestedOneWithoutPayablesInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutPayablesInput, Prisma.SupplierUncheckedCreateWithoutPayablesInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutPayablesInput
+  connect?: Prisma.SupplierWhereUniqueInput
+}
+
+export type SupplierUpdateOneRequiredWithoutPayablesNestedInput = {
+  create?: Prisma.XOR<Prisma.SupplierCreateWithoutPayablesInput, Prisma.SupplierUncheckedCreateWithoutPayablesInput>
+  connectOrCreate?: Prisma.SupplierCreateOrConnectWithoutPayablesInput
+  upsert?: Prisma.SupplierUpsertWithoutPayablesInput
+  connect?: Prisma.SupplierWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SupplierUpdateToOneWithWhereWithoutPayablesInput, Prisma.SupplierUpdateWithoutPayablesInput>, Prisma.SupplierUncheckedUpdateWithoutPayablesInput>
+}
+
+export type SupplierCreateWithoutPurchasesInput = {
+  id?: string
+  supplierCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payables?: Prisma.PayableCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutPurchasesInput = {
+  id?: string
+  supplierCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payables?: Prisma.PayableUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutPurchasesInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutPurchasesInput, Prisma.SupplierUncheckedCreateWithoutPurchasesInput>
+}
+
+export type SupplierUpsertWithoutPurchasesInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutPurchasesInput, Prisma.SupplierUncheckedUpdateWithoutPurchasesInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutPurchasesInput, Prisma.SupplierUncheckedCreateWithoutPurchasesInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutPurchasesInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutPurchasesInput, Prisma.SupplierUncheckedUpdateWithoutPurchasesInput>
+}
+
+export type SupplierUpdateWithoutPurchasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payables?: Prisma.PayableUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutPurchasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payables?: Prisma.PayableUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierCreateWithoutPayablesInput = {
+  id?: string
+  supplierCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  purchases?: Prisma.PurchaseCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierUncheckedCreateWithoutPayablesInput = {
+  id?: string
+  supplierCode: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  status?: $Enums.PartyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  purchases?: Prisma.PurchaseUncheckedCreateNestedManyWithoutSupplierInput
+}
+
+export type SupplierCreateOrConnectWithoutPayablesInput = {
+  where: Prisma.SupplierWhereUniqueInput
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutPayablesInput, Prisma.SupplierUncheckedCreateWithoutPayablesInput>
+}
+
+export type SupplierUpsertWithoutPayablesInput = {
+  update: Prisma.XOR<Prisma.SupplierUpdateWithoutPayablesInput, Prisma.SupplierUncheckedUpdateWithoutPayablesInput>
+  create: Prisma.XOR<Prisma.SupplierCreateWithoutPayablesInput, Prisma.SupplierUncheckedCreateWithoutPayablesInput>
+  where?: Prisma.SupplierWhereInput
+}
+
+export type SupplierUpdateToOneWithWhereWithoutPayablesInput = {
+  where?: Prisma.SupplierWhereInput
+  data: Prisma.XOR<Prisma.SupplierUpdateWithoutPayablesInput, Prisma.SupplierUncheckedUpdateWithoutPayablesInput>
+}
+
+export type SupplierUpdateWithoutPayablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchases?: Prisma.PurchaseUpdateManyWithoutSupplierNestedInput
+}
+
+export type SupplierUncheckedUpdateWithoutPayablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  supplierCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumPartyStatusFieldUpdateOperationsInput | $Enums.PartyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchases?: Prisma.PurchaseUncheckedUpdateManyWithoutSupplierNestedInput
+}
+
+
+/**
+ * Count Type SupplierCountOutputType
+ */
+
+export type SupplierCountOutputType = {
+  purchases: number
+  payables: number
+}
+
+export type SupplierCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  purchases?: boolean | SupplierCountOutputTypeCountPurchasesArgs
+  payables?: boolean | SupplierCountOutputTypeCountPayablesArgs
+}
+
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupplierCountOutputType
+   */
+  select?: Prisma.SupplierCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeCountPurchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseWhereInput
+}
+
+/**
+ * SupplierCountOutputType without action
+ */
+export type SupplierCountOutputTypeCountPayablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PayableWhereInput
+}
 
 
 export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -405,6 +626,9 @@ export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  purchases?: boolean | Prisma.Supplier$purchasesArgs<ExtArgs>
+  payables?: boolean | Prisma.Supplier$payablesArgs<ExtArgs>
+  _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["supplier"]>
 
 export type SupplierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -444,10 +668,20 @@ export type SupplierSelectScalar = {
 }
 
 export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supplierCode" | "name" | "phone" | "email" | "address" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["supplier"]>
+export type SupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  purchases?: boolean | Prisma.Supplier$purchasesArgs<ExtArgs>
+  payables?: boolean | Prisma.Supplier$payablesArgs<ExtArgs>
+  _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type SupplierIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type SupplierIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Supplier"
-  objects: {}
+  objects: {
+    purchases: Prisma.$PurchasePayload<ExtArgs>[]
+    payables: Prisma.$PayablePayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     supplierCode: string
@@ -852,6 +1086,8 @@ readonly fields: SupplierFieldRefs;
  */
 export interface Prisma__SupplierClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  purchases<T extends Prisma.Supplier$purchasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$purchasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payables<T extends Prisma.Supplier$payablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Supplier$payablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PayablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -907,6 +1143,10 @@ export type SupplierFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
+  /**
    * Filter, which Supplier to fetch.
    */
   where: Prisma.SupplierWhereUniqueInput
@@ -925,6 +1165,10 @@ export type SupplierFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensio
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
+  /**
    * Filter, which Supplier to fetch.
    */
   where: Prisma.SupplierWhereUniqueInput
@@ -942,6 +1186,10 @@ export type SupplierFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Supplier
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
   /**
    * Filter, which Supplier to fetch.
    */
@@ -991,6 +1239,10 @@ export type SupplierFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
+  /**
    * Filter, which Supplier to fetch.
    */
   where?: Prisma.SupplierWhereInput
@@ -1038,6 +1290,10 @@ export type SupplierFindManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Supplier
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
   /**
    * Filter, which Suppliers to fetch.
    */
@@ -1087,6 +1343,10 @@ export type SupplierCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
+  /**
    * The data needed to create a Supplier.
    */
   data: Prisma.XOR<Prisma.SupplierCreateInput, Prisma.SupplierUncheckedCreateInput>
@@ -1134,6 +1394,10 @@ export type SupplierUpdateArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Supplier
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
   /**
    * The data needed to update a Supplier.
    */
@@ -1201,6 +1465,10 @@ export type SupplierUpsertArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
+  /**
    * The filter to search for the Supplier to update in case it exists.
    */
   where: Prisma.SupplierWhereUniqueInput
@@ -1227,6 +1495,10 @@ export type SupplierDeleteArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
+  /**
    * Filter which Supplier to delete.
    */
   where: Prisma.SupplierWhereUniqueInput
@@ -1247,6 +1519,54 @@ export type SupplierDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Supplier.purchases
+ */
+export type Supplier$purchasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Purchase
+   */
+  select?: Prisma.PurchaseSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Purchase
+   */
+  omit?: Prisma.PurchaseOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseInclude<ExtArgs> | null
+  where?: Prisma.PurchaseWhereInput
+  orderBy?: Prisma.PurchaseOrderByWithRelationInput | Prisma.PurchaseOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseScalarFieldEnum | Prisma.PurchaseScalarFieldEnum[]
+}
+
+/**
+ * Supplier.payables
+ */
+export type Supplier$payablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payable
+   */
+  select?: Prisma.PayableSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payable
+   */
+  omit?: Prisma.PayableOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PayableInclude<ExtArgs> | null
+  where?: Prisma.PayableWhereInput
+  orderBy?: Prisma.PayableOrderByWithRelationInput | Prisma.PayableOrderByWithRelationInput[]
+  cursor?: Prisma.PayableWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PayableScalarFieldEnum | Prisma.PayableScalarFieldEnum[]
+}
+
+/**
  * Supplier without action
  */
 export type SupplierDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1258,4 +1578,8 @@ export type SupplierDefaultArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Supplier
    */
   omit?: Prisma.SupplierOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupplierInclude<ExtArgs> | null
 }
